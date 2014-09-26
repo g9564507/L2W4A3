@@ -1,0 +1,511 @@
+dataSplitByActivities["Laying"]
+colsum
+?colMean
+?colMeans
+colMeans(dataSplitByActivities[x[1]])
+x<-names(dataSplitByActivities)#
+colMeans(dataSplitByActivities[x[1]])
+names(dataSplitByActivities)
+what(x)
+str(s)
+str(x)
+x[1]
+dataSplitByActivities[x[1]]
+colMeans(dataSplitByActivities[x[1]])
+dim(dataSplitByActivities[x[1]])
+names(dataSplitByActivities[x[1]])
+str(dataSplitByActivities[x[1]])
+str(dataSplitByActivities)
+colMeans(dataSplitByActivities$x[1])
+colMeans(as.matrix(dataSplitByActivities$x[1]))
+what(dataSplitByActivities$x[1])
+str(dataSplitByActivities[x[1]])
+dataSplitByActivities[x[1]][1]
+dataSplitByActivities[x[1]][1][1]
+dataSplitByActivities[x[1]][1,1]
+dataSplitByActivities[x[1]][[1]]
+dim(dataSplitByActivities$x[1])
+class(dataSplitByActivities$x[1])
+length(dataSplitByActivities$x[1])
+str(dataSplitByActivities$x[1])
+x[1]
+names(x[1]dataSplitByActivities$x[1]))
+names(dataSplitByActivities$x[1]))
+names(dataSplitByActivities$x[1])
+names(dataSplitByActivities$(x[1]))
+names(dataSplitByActivities[x[1]])
+what(dataSplitByActivities$"Laying)
+what(dataSplitByActivities$"Laying")
+what(dataSplitByActivities$"Laying")
+what(dataSplitByActivities$x[1])
+what(dataSplitByActivities$x[[1]])
+x[1]
+what(dataSplitByActivities[x[1]])
+colMeans(dataSplitByActivities$"Laying")
+colMeans(as.numeric(dataSplitByActivities$"Laying"))
+tapply(dataSplitByActivities$"Laying",names(dataSplitByActivities$"Laying"),mean)
+names(dataSplitByActivities$"Laying"
+)
+dataSplitByActivities$"Laying"$activities<-1
+tapply(dataSplitByActivities$"Laying",names(dataSplitByActivities$"Laying"),mean)
+dataSplitByActivities$"Laying"$activities
+tapply(as.numeric(dataSplitByActivities$"Laying"),names(dataSplitByActivities$"Laying"),mean)
+dataSplitByActivities$"Laying"$frequencyBodyAccJerkMeanFreqX
+mean(dataSplitByActivities$"Laying"$frequencyBodyAccJerkMeanFreqX)
+tapply(as.numeric(dataSplitByActivities$"Laying"),names(dataSplitByActivities$"Laying"),sum)
+tapply(as.numeric(dataSplitByActivities$"Laying"),names(dataSplitByActivities$"Laying"),mean)
+as.numeric(dataSplitByActivities$"Laying")
+names(unlist(dataSplitByActivities$"Laying"))
+names(unlist(dataSplitByActivities))
+?unlist
+names(unlist(dataSplitByActivities$"Laying",recursive=FALSE))
+names(unlist(dataSplitByActivities$"Laying",recursive=FALSE))
+names(dataSplitByActivities$"Laying")
+typeof(unlist(x, recursive = TRUE, use.names = TRUE))
+typeof(dataSplitByActivities$"Laying")
+as.data.frame(dataSplitByActivities$"Laying")
+tapply(as.data.frame(dataSplitByActivities$"Laying"),names(dataSplitByActivities$"Laying"),mean)
+warnings()
+tapply(as.data.frame(dataSplitByActivities$"Laying"),colnames(dataSplitByActivities$"Laying"),mean)
+colMeans(as.data.frame(dataSplitByActivities$"Laying"))
+x[1]
+colMeans(as.data.frame(dataSplitByActivities$x[1]))
+colMeans(as.data.frame(dataSplitByActivities[x[1]]))
+Rprof({#
+################################################################
+### Step 0#
+### Reading needed data#
+features <- read.table("./UCI HAR Dataset/features.txt")#
+activityLabels <- read.table("./UCI HAR Dataset/activity_labels.txt")#
+## read test data#
+subjectTest <- read.table("./UCI HAR Dataset/test/subject_test.txt")#
+xTest <- read.table("./UCI HAR Dataset/test/X_test.txt")#
+yTest <- read.table("./UCI HAR Dataset/test/y_test.txt")#
+## read train data#
+subjectTrain <- read.table("./UCI HAR Dataset/train/subject_train.txt")#
+xTrain <- read.table("./UCI HAR Dataset/train/X_train.txt")#
+yTrain <- read.table("./UCI HAR Dataset/train/y_train.txt")#
+#
+################################################################
+### Step 1 #
+### Merges the training and the test sets to create one data set.#
+## give column names and combine test data#
+colnames(xTest)<-features$V2#
+colnames(subjectTest)<-"subjects"#
+colnames(yTest)<-"activities"#
+dataTest<-cbind(subjectTest,yTest,xTest)#
+# test<-as.data.frame(rep("test",nrow(xTest)))#
+#
+## give column names and combine train data#
+colnames(xTrain)<-features$V2#
+colnames(subjectTrain)<-"subjects"#
+colnames(yTrain)<-"activities"#
+dataTrain<-cbind(subjectTrain,yTrain,xTrain)#
+#
+## The result step 1,combine test data and train data to a dataset = dataMerge#
+dataMerge<-rbind(dataTest,dataTrain)  #
+################################################################
+### Step 2 #
+### Extracts only the measurements on the mean and standard deviation for each measurement.#
+## Extract the column numbers of those including "mean" , "std" ,"subjects",or "activities"#
+colExtract<-grep("mean|std|subjects|activities",colnames(dataMerge),fixed=FALSE,ignore.case =FALSE)#
+#
+## The result of step 2, extracted dataset = dataExtract#
+dataExtract<- dataMerge[ ,colExtract]#
+################################################################
+### Step 3 #
+### Uses descriptive activity names to name the activities in the data set#
+#
+## notShowInR is for forceing gsub() not to print the results on the screen #
+#
+dataExtract$activities <- gsub(1,"Walking",dataExtract$activities) #
+dataExtract$activities <- gsub(2,"Walking upstairs",dataExtract$activities)#
+dataExtract$activities <- gsub(3,"Walking downstairs",dataExtract$activities)#
+dataExtract$activities <- gsub(4,"Sitting",dataExtract$activities)#
+dataExtract$activities <- gsub(5,"Standing",dataExtract$activities)#
+dataExtract$activities <- gsub(6,"Laying",dataExtract$activities)#
+################################################################
+### Step 4 #
+### Uses descriptive activity names to name the activities in the data set#
+colnames(dataExtract)<-sub("^t","time", colnames(dataExtract) )#
+colnames(dataExtract)<-sub("^f","frequency", colnames(dataExtract) )#
+colnames(dataExtract)<-sub("mean","Mean", colnames(dataExtract) )#
+colnames(dataExtract)<-sub("std","Std", colnames(dataExtract) )#
+colnames(dataExtract)<-sub("\\()","", colnames(dataExtract) )#
+colnames(dataExtract)<-gsub("-","", colnames(dataExtract) )#
+#
+colnames(dataExtract)<-sub("BodyBody","Body", colnames(dataExtract) )#
+##colnames(dataExtract)<-sub("Acc","Acceleration", colnames(dataExtract) )#
+##colnames(dataExtract)<-sub("Mag","Magnitude", colnames(dataExtract) )#
+#
+################################################################
+### Step 5 #
+### From the data set in step 4, creates a second, independent tidy data set #
+### with the average of each variable for each activity and each subject. #
+#
+tempFrame<-data.frame()  ## dataframe to use tapply#
+dataTemp<-data.frame()   ## temp data.frame for each subject#
+data    <- data.frame()  ## the result data frame #
+#
+for( i in 1:30){#
+	tempFrame <- dataExtract[dataExtract$subjects == i,]#
+    dataTemp[1:6,1]<- i    ## the first column be subjects, 6 is for every subject has 6 activities #
+    dataTemp[1:6,2]<- rownames(tapply(tempFrame[,1],tempFrame$activities,mean)) ## 6 activities as 2nd column#
+	for (j in 3:81){#
+#
+	    dataTemp[,j]<-tapply(tempFrame[,j],tempFrame$activities,mean)  ## mean of subject=i , column = j#
+    }#
+#
+    if(i==1){ #
+            data<-dataTemp  #
+        }#
+    else{#
+     	data<-rbind(data,dataTemp)#
+     }#
+}#
+dim(data)#
+##colnames(data)<-colnames(dataExtract)#
+#
+colnames(data)<-sub("^t","AvgT", colnames(dataExtract) )#
+colnames(data)<-sub("^f","AvgF", colnames(data) )#
+#
+write.table(data,"tidyData.txt",row.name=FALSE)#
+})
+summaryRprof()
+Rprof()
+?Rprof
+dir()
+?Rprof
+Rprof()
+################################################################
+### Step 0#
+### Reading needed data#
+features <- read.table("./UCI HAR Dataset/features.txt")#
+activityLabels <- read.table("./UCI HAR Dataset/activity_labels.txt")#
+## read test data#
+subjectTest <- read.table("./UCI HAR Dataset/test/subject_test.txt")#
+xTest <- read.table("./UCI HAR Dataset/test/X_test.txt")#
+yTest <- read.table("./UCI HAR Dataset/test/y_test.txt")#
+## read train data#
+subjectTrain <- read.table("./UCI HAR Dataset/train/subject_train.txt")#
+xTrain <- read.table("./UCI HAR Dataset/train/X_train.txt")#
+yTrain <- read.table("./UCI HAR Dataset/train/y_train.txt")#
+#
+################################################################
+### Step 1 #
+### Merges the training and the test sets to create one data set.#
+## give column names and combine test data#
+colnames(xTest)<-features$V2#
+colnames(subjectTest)<-"subjects"#
+colnames(yTest)<-"activities"#
+dataTest<-cbind(subjectTest,yTest,xTest)#
+# test<-as.data.frame(rep("test",nrow(xTest)))#
+#
+## give column names and combine train data#
+colnames(xTrain)<-features$V2#
+colnames(subjectTrain)<-"subjects"#
+colnames(yTrain)<-"activities"#
+dataTrain<-cbind(subjectTrain,yTrain,xTrain)#
+#
+## The result step 1,combine test data and train data to a dataset = dataMerge#
+dataMerge<-rbind(dataTest,dataTrain)  #
+################################################################
+### Step 2 #
+### Extracts only the measurements on the mean and standard deviation for each measurement.#
+## Extract the column numbers of those including "mean" , "std" ,"subjects",or "activities"#
+colExtract<-grep("mean|std|subjects|activities",colnames(dataMerge),fixed=FALSE,ignore.case =FALSE)#
+#
+## The result of step 2, extracted dataset = dataExtract#
+dataExtract<- dataMerge[ ,colExtract]#
+################################################################
+### Step 3 #
+### Uses descriptive activity names to name the activities in the data set#
+#
+## notShowInR is for forceing gsub() not to print the results on the screen #
+#
+dataExtract$activities <- gsub(1,"Walking",dataExtract$activities) #
+dataExtract$activities <- gsub(2,"Walking upstairs",dataExtract$activities)#
+dataExtract$activities <- gsub(3,"Walking downstairs",dataExtract$activities)#
+dataExtract$activities <- gsub(4,"Sitting",dataExtract$activities)#
+dataExtract$activities <- gsub(5,"Standing",dataExtract$activities)#
+dataExtract$activities <- gsub(6,"Laying",dataExtract$activities)#
+################################################################
+### Step 4 #
+### Uses descriptive activity names to name the activities in the data set#
+colnames(dataExtract)<-sub("^t","time", colnames(dataExtract) )#
+colnames(dataExtract)<-sub("^f","frequency", colnames(dataExtract) )#
+colnames(dataExtract)<-sub("mean","Mean", colnames(dataExtract) )#
+colnames(dataExtract)<-sub("std","Std", colnames(dataExtract) )#
+colnames(dataExtract)<-sub("\\()","", colnames(dataExtract) )#
+colnames(dataExtract)<-gsub("-","", colnames(dataExtract) )#
+#
+colnames(dataExtract)<-sub("BodyBody","Body", colnames(dataExtract) )#
+##colnames(dataExtract)<-sub("Acc","Acceleration", colnames(dataExtract) )#
+##colnames(dataExtract)<-sub("Mag","Magnitude", colnames(dataExtract) )#
+#
+################################################################
+### Step 5 #
+### From the data set in step 4, creates a second, independent tidy data set #
+### with the average of each variable for each activity and each subject. #
+#
+tempFrame<-data.frame()  ## dataframe to use tapply#
+dataTemp<-data.frame()   ## temp data.frame for each subject#
+data    <- data.frame()  ## the result data frame #
+#
+for( i in 1:30){#
+	tempFrame <- dataExtract[dataExtract$subjects == i,]#
+    dataTemp[1:6,1]<- i    ## the first column be subjects, 6 is for every subject has 6 activities #
+    dataTemp[1:6,2]<- rownames(tapply(tempFrame[,1],tempFrame$activities,mean)) ## 6 activities as 2nd column#
+	for (j in 3:81){#
+#
+	    dataTemp[,j]<-tapply(tempFrame[,j],tempFrame$activities,mean)  ## mean of subject=i , column = j#
+    }#
+#
+    if(i==1){ #
+            data<-dataTemp  #
+        }#
+    else{#
+     	data<-rbind(data,dataTemp)#
+     }#
+}#
+dim(data)#
+##colnames(data)<-colnames(dataExtract)#
+#
+colnames(data)<-sub("^t","AvgT", colnames(dataExtract) )#
+colnames(data)<-sub("^f","AvgF", colnames(data) )#
+#
+write.table(data,"tidyData.txt",row.name=FALSE)
+by.total
+?Rprof
+summaryRprof
+summaryRprof()
+?scan
+set.seed(1)#
+rpois(5, 2)
+set.seed(1)#
+rpois(5, 2)
+set.seed(10)#
+x <- rbinom(10, 10, 0.5)
+x
+e <- rnorm(10, 0, 20)
+y <- 0.5 + 2 * x + e
+plot(x,y)
+?system.time
+outcome <- read.csv("outcome-of-care-measures.csv", colClasses = "character")#
+#
+head(outcome)
+setwd("../L2W4A3")
+outcome <- read.csv("outcome-of-care-measures.csv", colClasses = "character")#
+#
+head(outcome)
+ncol(outcome)
+names(outcome)
+outcome[, 11] <- as.numeric(outcome[, 11])#
+hist(outcome[, 11])
+what(outcome)
+?stop
+state<-"TX"
+state %in% outcome$"Hospital.Name"
+state %in% outcome$"State"
+?stop
+iter <- 12#
+if(iter > 10) stop("too many iterations")
+options(errror=expression("Error in" ))
+iter <- 12#
+if(iter > 10) stop("too many iterations")
+options(error=expression("Error in" ))
+iter <- 12#
+if(iter > 10) stop("too many iterations")
+iter <- 12#
+if(iter > 10) stop("%ctoo many iterations",state)
+dataCareMeasures<- read.csv("outcome-of-care-measures.csv", colClasses = "character")
+state<-"WWWW"
+outcome<-"YYY"
+if(!state %in% dataCareMeasures$"State"){stop("Error in best("state","outcome"): invalid state")}
+expression(1 + 0:9))
+expression(state)
+options(error="Error in ")
+options(error=expression("Error in "))
+iter <- 12#
+if(iter > 10) stop("%ctoo many iterations",state)
+best<-function(state, outcome){#
+#
+	dataCareMeasures<- read.csv("outcome-of-care-measures.csv", colClasses = "character")#
+#
+	outcomeArray<-c("heart attack", "heart failure", "pneumonia")#
+	# "heart attack", "heart failure", or "pneumonia"#
+#
+	if(!state %in% dataCareMeasures$"State"){stop("invalid state")}#
+		##stop("Error in best("state","outcome"): invalid state")#
+	else if(!outcome %in% outcomeArray$"State"){stop("invalid outcome")}#
+#
+	else{#
+	bestHospital<-"TEST"#
+	return( bestHospital) #
+	}#
+}
+best<-function(state, outcome){#
+#
+	dataCareMeasures<- read.csv("outcome-of-care-measures.csv", colClasses = "character")#
+#
+	outcomeArray<-c("heart attack", "heart failure", "pneumonia")#
+	# "heart attack", "heart failure", or "pneumonia"#
+#
+	if(!state %in% dataCareMeasures$"State"){stop("invalid state")}#
+		##stop("Error in best("state","outcome"): invalid state")#
+	else if(!outcome %in% outcomeArray){stop("invalid outcome")}#
+#
+	else{#
+	bestHospital<-"TEST"#
+	return( bestHospital) #
+	}
+}
+best("BB", "heart attack")
+best("NY", "hert attack")
+best("TX", "heart attack")
+best("MD", "heart attack")
+best("MD", "pneumonia")
+names(dataCareMeasures)
+X<-names(dataCareMeasures)
+X[11]
+X[17]
+X[23]
+length(dataCareMeasures$"Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack")
+what(dataCareMeasures$"Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack")
+head(dataCareMeasures$"Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack")
+min(as.numeric(dataCareMeasures$"Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack"))
+Y<-"Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack"
+head(dataCareMeasures$Y)
+head(dataCareMeasures[,Y])
+head(dataCareMeasures[,11])
+outcome<-"heart failure"
+outcomeColumn<-switch(outcome,"heart attack"=11,"heart failure"=17,"pneumonia"=23)
+outcomeColumn
+outcomeColumn<-switch(outcome,"heart attack"=11,"heart failure"=17,"pneumonia"=23)
+data[data[,outcomeColumn]=="Not Available"]<-NA
+head(data[,outcomeColumn])
+data<- read.csv("outcome-of-care-measures.csv", colClasses = "character")
+data[data[,outcomeColumn]=="Not Available"]<-NA
+data[ ,outcomeColumn=="Not Available"]<-NA
+head(data[ ,outcomeColumn])
+outcome<-"heart attack"
+outcomeColumn<-switch(outcome,"heart attack"=11,"heart failure"=17,"pneumonia"=23)#
+	  ##  data[data[,outcomeColumn]=="Not Available"]<-NA#
+	     data[ ,outcomeColumn=="Not Available"]<-NA
+head(data[ ,outcomeColumn])
+length(data[data[ ,outcomeColumn]=="Not Available"])
+outcomeColumn
+length(data)
+length(data[ ,outcomeColumn])
+dataTemp<-data[ ,outcomeColumn]=="Not Available"#
+	    dataTemp[dataTemp=="Not Available"]<-NA
+head(dataTemp)
+dataTemp<-data[ ,outcomeColumn]#
+	    dataTemp[dataTemp=="Not Available"]<-NA
+head(dataTemp)
+V<-as.nmueric(data[ ,outcomeColumn],na.rm=TRUE)
+V<-as.numeric(data[ ,outcomeColumn],na.rm=TRUE)
+min(data[ ,outcomeColumn])
+min(data[ ,outcomeColumn],na.rm=TRUE)
+grep( min(data[ ,outcomeColumn],na.rm=TRUE),data[ ,outcomeColumn])
+names(data)
+dataSplit<-data[data$"State"==state, c(2,7,outcomeColumn)]
+dim(dataSplit)
+state
+state<-"TX"
+dataSplit<-data[data$"State"==state, c(2,7,outcomeColumn)]
+dim(dataSplit)
+names(dataSplit)
+outcomeColumn<-switch(outcome,"heart attack"=11,"heart failure"=17,"pneumonia"=23)#
+		## [2] "Hospital.Name"  #
+		## [7] "State"#
+        dataSplit<-data[data$"State"==state, c(2,7,outcomeColumn)]#
+#
+		 dataTemp<-dataSplit[ ,3]#
+	     dataTemp[dataTemp=="Not Available"]<-NA#
+         dataSplit[ ,3]  <- dataTemp#
+         ##min(dataSplit[ ,outcomeColumn],na.rm=TRUE)#
+         bestHospital<- dataSplit[ grep( min(dataSplit[ ,3],na.rm=TRUE),data[ ,3]), 1]
+bestHospital
+grep( min(dataSplit[ ,3],na.rm=TRUE)
+)
+grep( min(dataSplit[ ,3],na.rm=TRUE),data[ ,3])
+min(dataSplit[ ,3],na.rm=TRUE)
+grep(12,data[ ,3])
+na.rm
+?is.na
+anyNA(data[2, ])
+bestHospital<- dataSplit[ grep( min(dataSplit[ ,3],na.rm=TRUE),dataSplit[ ,3]), 1]
+bestHospital
+source(best.R)
+source("best.R")
+ls()
+dir()
+best("TX", "heart attack")
+best("TX", "heart failure")
+best("MD", "pneumonia")
+dataSplit[1:100,3]
+min(dataSplit[ ,3]
+)
+source("best.R")
+best("TX", "heart failure")
+source("best.R")
+best("TX", "heart failure")
+grep( min(dataSplit[ ,3],na.rm=TRUE),dataSplit[ ,3])
+dataSplit[210,1]
+source("best.R")
+best("TX", "heart failure")
+grep( min(dataSplit[ ,3],na.rm=TRUE),dataSplit[ ,3])
+bestRow<-grep( min(dataSplit[ ,3],na.rm=TRUE),dataSplit[ ,3])#
+        bestHospital<- dataSplit[bestRow, 1]
+bestRow<-grep( min(dataSplit[ ,3],na.rm=TRUE),dataSplit[ ,3])#
+        bestHospital
+source("best.R")
+best("TX", "heart failure")
+grep( min(dataSplit[ ,3],na.rm=TRUE),dataSplit[ ,3])
+best("TX", "heart failure")
+source("best.R")
+best("TX", "heart attack")
+"FORT DUNCAN MEDICAL CENTER"
+best("MD", "heart attack")
+best("MD", "pneumonia")
+grep( min(dataSplit[ ,3],na.rm=TRUE),dataSplit[ ,3])
+state<-"MD"
+outcome<-"pneumonia"
+outcomeColumn<-switch(outcome,"heart attack"=11,"heart failure"=17,"pneumonia"=23)#
+		## [2] "Hospital.Name"  #
+		## [7] "State"#
+        dataSplit<-data[data$"State"==state, c(2,7,outcomeColumn)]#
+        ## remove "Not Available"  #
+		dataTemp<-dataSplit[ ,3]#
+	    dataTemp[ dataTemp=="Not Available" ]<-65536  ## use 65536 to represent NA#
+        dataSplit[ ,3]  <- dataTemp
+grep( min(dataSplit[ ,3],na.rm=TRUE),dataSplit[ ,3])
+dataSplit[31,3]
+dataSplit[36,3]
+as.numeric(dataSplit[36,3])
+as.numeric(dataSplit[31,3])
+best("BB", "heart attack")
+best("NY", "hert attack")
+dataSplit[31,2]
+dataSplit[36,2]
+best("MD", "pneumonia")
+dataSplit[30:40,3]
+best("NY", "pneumonia")
+source("submitscript3.R")
+submit()
+submit()
+2
+submit()
+bestHospital[1]
+source("best.R")
+submit()
+submit()
+submit()
+?sort
+source("best.R")
+best("TX", "heart attack")
+best("TX", "heart failure")
+best("TX", "heart failure")
+best("MD", "heart attack")
+bestHospital

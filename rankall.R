@@ -1,0 +1,72 @@
+# rankall.R
+
+##num=1, default is the best hospital
+
+rankall<-function(outcome,num=1){
+	data<- read.csv("outcome-of-care-measures.csv", colClasses = "character")
+
+	outcomeArray<-c("heart attack", "heart failure", "pneumonia")
+
+	if(!outcome %in% outcomeArray){ stop("invalid outcome") }
+
+
+    else{
+            # "Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack" =column 11
+            # "Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure" =column 17
+            # "Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia"     =column 23
+			outcomeColumn<-switch(outcome,"heart attack"=11,"heart failure"=17,"pneumonia"=23)
+	  
+			## [2] "Hospital.Name"  
+			## [7] "State"
+            numStates<-names(table(data[,7])) ## the order is increasing
+            resultFrame <- data.frame( matrix(0,length(numStates),2) )
+
+            colnames(resultFrame) <- c("hospital","state")
+            rownames(resultFrame) <- numStates
+			for( i in 1:length(numStates) ){
+
+				dataSplit<-data[data$"State"==numStates[i], c(2,7,outcomeColumn)]
+
+				## remove "Not Available"  
+			    dataTemp<-dataSplit[ ,3]
+	    	    dataTemp[ dataTemp=="Not Available" ]<-65536  ## use 65536 to represent NA
+       		    dataSplit[ ,3]  <- as.numeric(dataTemp)
+                
+                # negelect NA Part
+       			dataSplit<-dataSplit[dataSplit[,3]<65536,]  ## for those not NA
+        		dataRanked<-dataSplit[ order(dataSplit[,3], dataSplit[,1]), ]
+        		dataRanked$Rank<- order(dataRanked[,3], dataRanked[,1]) ## append a new column Rank
+                ## min(dataSplit[ ,outcomeColumn],na.rm=TRUE)
+                
+               	getName <-function(num){
+           				if(num=="best"){
+                            return(dataRanked[1,1])
+            			}
+            
+            			else if(num=="worst"){
+            				return( dataRanked[ length(dataRanked$Rank), 1] )
+            			}
+            
+            			else{
+            				
+            				if(num %in% dataRanked$Rank){
+                    				return(dataRanked[num,1])
+            				}
+            				
+            				else{return(NA)} 
+            			}
+            	}
+                resultFrame[i,1]<-getName(num)
+                resultFrame[i,2]<-numStates[i]
+
+
+
+			}
+
+			return(resultFrame)  ##return data frame 
+        	
+                	
+
+    }
+
+}
